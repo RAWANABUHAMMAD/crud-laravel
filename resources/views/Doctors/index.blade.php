@@ -9,6 +9,7 @@
             <th>Name</th>  
             <th>phone</th>  
             <th>Email</th>
+            <th>Sspecialty</th>
             <th>Actions</th>
         </tr>
     </thead>
@@ -20,6 +21,7 @@
                 <td>{{ $doctor->name }}</td>
                 <td>{{ $doctor->phone }}</td>
                 <td>{{ $doctor->email }}</td>
+                <td>{{ $doctor->specialty }}</td>
                 <td>
                     <a href="{{ route('doctors.edit' , $doctor->id ) }}">Edit</a> 
                     <form action="{{ route('doctors.destroy', $doctor->id) }}" method="post">

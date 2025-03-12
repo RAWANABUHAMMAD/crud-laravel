@@ -16,8 +16,9 @@ return new class extends Migration
             $table->string('name');
             $table->string('email')->unique();
             $table->string('phone');
+            // $table->foreignId('specialty_id')->constrained('specialties')->onDelete('cascade');
             $table->timestamps();
-        });
+            });
     }
 
     /**

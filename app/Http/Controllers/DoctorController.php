@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Doctor;
 use App\Http\Controllers\Controller;
+use App\Models\Specialty;
 use Illuminate\Http\Request;
 
 class DoctorController extends Controller
@@ -12,12 +13,13 @@ class DoctorController extends Controller
      * Display a listing of the resource.
      */
     public function index()
-    {
-        $doctors = doctor::all();
-        return view("doctors.index", compact("doctors"));
-        
-    }
+    {   
+        // $doctors = doctor::all();
+        // return view("doctors.index", compact("doctors"));
 
+        $doctors = Doctor::with("specialty")->get();
+         return view("doctors.index", compact("doctors"));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -35,6 +37,7 @@ class DoctorController extends Controller
         $doctors->name=$request->name;
         $doctors->email=$request->email;
         $doctors->phone=$request->phone;
+        $doctors->specialty_id=$request->specialty_id;
         $doctors->save();
         return redirect('doctors');
         
@@ -55,7 +58,8 @@ class DoctorController extends Controller
     {
         // return $id;
         $doctors=doctor::findOrFail($id);
-        return view('doctors.edit', compact('doctors'));
+        $specialties = Specialty::all();
+        return view('doctors.edit', compact('doctors','specialties'));
     }
 
     /**
@@ -67,7 +71,9 @@ class DoctorController extends Controller
         $doctors->update([
         'name'=>$request->name,
         'email'=>$request->email,
-        'phone'=>$request->phone
+        'phone'=>$request->phone,
+        'specialty_id'=>$request->specialty_id
+       
         ]);
         return redirect()->route('doctors.index');
         // return redirect('doctors');
